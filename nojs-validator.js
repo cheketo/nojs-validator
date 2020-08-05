@@ -1,16 +1,17 @@
-class Validator
-{
-    mainClass = 'validate-element';
+class Validator {
+    mainClass = '';
     elementTags = ['input','select','textarea'];
     elements = [];
     forms = [];
     events = {};
+    validateOn = '';
     constructor( obj = {} )
     {
         this.setMainClass(obj.mainClass);
         this.setElementTags(obj.elements);
         this.setForms(obj.forms);
         this.setValidationEvents(obj.events);
+        this.setValidateOn(obj.validateOn);
         this.setElements();
     }
     setMainClass(mainClass=null)
@@ -42,6 +43,11 @@ class Validator
     {
         if(events)
             this.events = events;
+    }
+    setValidateOn(validateOn)
+    {
+        if(validateOn)
+            this.validateOn = validateOn;
     }
     setElements()
     {
@@ -85,6 +91,7 @@ class Validator
             if(this.events.after && !element.hasAttribute('validate-after')) element.setAttribute('validate-after',this.events.after);
             if(this.events.afterTrue && !element.hasAttribute('validate-after-true')) element.setAttribute('validate-after-true',this.events.afterTrue);
             if(this.events.afterFalse && !element.hasAttribute('validate-after-false')) element.setAttribute('validate-after-false',this.events.afterFalse);
+            if(this.validateOn && !element.hasAttribute('validate-on')) element.setAttribute('validate-on',this.validateOn);
             element.validate = new ValidateElement(element);
             this.elements = this.getElements().concat(element);
         }
@@ -99,7 +106,6 @@ class Validator
     }
     isValid()
     {
-        console.log(this.elements);
         var isValid = this.elements.every(function(element)
         {
             return element.validate.isValid();
@@ -112,7 +118,7 @@ class ValidateElement
 {
     validationText = '';
     validateOn = ['change'];
-    validations = ['empty','max-length','min-length','integer','decimal', 'function'];
+    validations = ['empty','max-length','min-length','integer','float','numeric','max-value','min-value','email','function'];
     beforeValidateEvent = new CustomEvent('beforeValidate');
     afterValidateEvent = new CustomEvent('afterValidate');
     afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
@@ -228,25 +234,76 @@ class ValidateElement
     }
     validateEmpty()
     {
-        var result = this.element.value != '' && this.element.value != undefined;
-        if(!result)
+        var isValid = this.element.value != '' && this.element.value != undefined;
+        if(!isValid)
             this.validationText = this.element.getAttribute('validate-empty');
-        return result;
+        return isValid;
     }
     validateMaxLength()
     {
         var maxLength = parseInt(this.element.getAttribute('validate-max-length'));
-        var result = this.element.value.length <= maxLength;
-        if(!result)
+        var isValid = this.element.value.length <= maxLength;
+        if(!isValid)
             this.validationText = this.element.getAttribute('validate-max-length-msg');
-        return result;
+        return isValid;
     }
     validateMinLength()
     {
         var minLength = parseInt(this.element.getAttribute('validate-min-length'));
-        var result = this.element.value.length >= minLength;
-        if(!result)
+        var isValid = this.element.value.length >= minLength;
+        if(!isValid)
             this.validationText = this.element.getAttribute('validate-min-length-msg');
-        return result;
+        return isValid;
+    }
+    validateMaxValue()
+    {
+        var maxValue = this.element.getAttribute('validate-max-value');
+        var isValid = this.element.value <= maxValue;
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-max-value-msg');
+        return isValid;
+    }
+    validateMinValue()
+    {
+        var minValue = this.element.getAttribute('validate-min-value');
+        var isValid = this.element.value >= minValue;
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-min-value-msg');
+        return isValid;
+    }
+    validateString()
+    {
+        var isValid = isNaN(parseFloat(this.element.value));
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-string');
+        return isValid;
+    }
+    validateNumeric()
+    {
+        var isValid = !isNaN(parseFloat(this.element.value)) && isFinite(this.element.value);
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-numeric');
+        return isValid;
+    }
+    validateInteger()
+    {
+        var isValid = Number.isInteger(parseInt(this.element.value));
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-numeric');
+        return isValid;
+    }
+    validateFloat()
+    {
+        var isValid = !Number.isNaN(parseFloat(this.element.value));
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-numeric');
+        return isValid;
+    }
+    validateEmail()
+    {
+        var isValid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( this.element.value );
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-email');
+        return isValid;
     }
 }
