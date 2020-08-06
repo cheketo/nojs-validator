@@ -1,4 +1,5 @@
-class Validator {
+class NoJsValidator
+{
     mainClass = '';
     elementTags = ['input','select','textarea'];
     elements = [];
@@ -92,7 +93,7 @@ class Validator {
             if(this.events.afterTrue && !element.hasAttribute('validate-after-true')) element.setAttribute('validate-after-true',this.events.afterTrue);
             if(this.events.afterFalse && !element.hasAttribute('validate-after-false')) element.setAttribute('validate-after-false',this.events.afterFalse);
             if(this.validateOn && !element.hasAttribute('validate-on')) element.setAttribute('validate-on',this.validateOn);
-            element.validate = new ValidateElement(element);
+            element.validate = new NoJsValidateElement(element);
             this.elements = this.getElements().concat(element);
         }
     }
@@ -114,11 +115,11 @@ class Validator {
     }
 }
 
-class ValidateElement
+class NoJsValidateElement
 {
     validationText = '';
     validateOn = ['change'];
-    validations = ['empty','max-length','min-length','integer','float','numeric','max-value','min-value','email','function'];
+    validations = ['empty','max-length','min-length','integer','float','numeric','max-value','min-value','email','checked','equal-to-field','function'];
     beforeValidateEvent = new CustomEvent('beforeValidate');
     afterValidateEvent = new CustomEvent('afterValidate');
     afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
@@ -305,5 +306,64 @@ class ValidateElement
         if(!isValid)
             this.validationText = this.element.getAttribute('validate-email');
         return isValid;
+    }
+    validateChecked()
+    {
+        var isValid = true;
+        if(this.element.type.toLowerCase() == 'radio')
+        {
+            isValid = this.validateCheckedRadio();
+        }else{
+            if(this.element.type.toLowerCase() == 'checkbox')
+            {
+                isValid = this.validateCheckedCheckbox();
+            }
+        }
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-checked-msg');
+    }
+    validateCheckedRadio()
+    {
+        var name = this.element.getAttribute('name');
+        return document.getElementsByName(name).some(function(radio)
+        {
+            return radio.checked == true && radio.type.toLowerCase() == 'radio';
+        });
+    }
+    validateCheckedCheckbox()
+    {
+        var name = this.element.getAttribute('name');
+        var checked = document.getElementsByName(name).filter(function(checkbox)
+        {
+            return checkbox.checked == true && checkbox.type.toLowerCase() == 'checkbox';
+        }).length;
+        var target = parseInt(this.element.getAttribute('validate-checked'));
+        if(isNaN(target))
+        {
+            var mode;
+            if(this.element.hasAttribute('validate-checked-mode'))
+            {
+                mode = this.element.getAttribute('validate-checked-mode');
+            }
+            switch(mode)
+            {
+                case 'max': return checked <= target;
+                case 'equal': return checked == target;
+                default: return checked >= target;
+            }
+        }else{
+            console.log('Attribute validate-checked must be an integer number');
+            return false;
+        }
+    }
+    validateEqualToField()
+    {
+        var field = document.getElementById(this.element.getAttribute('validate-equal-to-field'));
+        if(field && field != undefined)
+        {
+            return this.element.value == field.value;
+        }
+        console.log('Attribute validate-equal-to-field must be an id of a field');
+        return false;
     }
 }

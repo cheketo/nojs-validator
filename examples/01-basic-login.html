@@ -1,0 +1,37 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Basic Login Example</title>
+    </head>
+    <body>
+        <form>
+            <div>
+                <label for="user">Username</label>
+                <input type="text" name="user" placeholder="Username" validate-empty="Enter an username" validate-min-length="4">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="password" validate-empty="Enter a password">
+            </div>
+            <div>
+                <button type="submit" onclick="return validateForm()">Submit</button>
+            </div>
+        </form>
+        <script src="../nojs-validator.js"></script>
+        <script>
+            // Creates NoJsValidator
+            const validator = new NoJsValidator();
+            // Sets a custom function to submit the form
+            function validateForm()
+            {
+                var isValid = validator.isValid();
+                if(!isValid)
+                {
+                    alert('*You need to fill all inputs.\r\n\n*User must be 4 characters long, at least.');
+                }
+                return isValid;
+            }
+        </script>
+    </body>
+</html>

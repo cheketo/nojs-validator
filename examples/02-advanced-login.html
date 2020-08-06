@@ -1,0 +1,67 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Basic Login Example</title>
+        <style>
+            .error-input{
+                border: 1px solid red;
+            }
+            .error{
+                color: red;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <div>
+                <label for="user">Username</label>
+                <input type="text" name="user" placeholder="Username" validate-empty="Enter an username" validate-min-length="4" validate-min-length-msg="Enter at least 4 characters">
+                <span class="hidden error"></span>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="password" validate-empty="Enter a password">
+                <span class="hidden error"></span>
+            </div>
+            <div>
+                <button type="submit" onclick="return validator.isValid()">Submit</button>
+            </div>
+        </form>
+        <script src="../nojs-validator.js"></script>
+        <script>
+            // Creates NoJsValidator with events to have a custom visual response of validations
+            const validator = new NoJsValidator({events:{afterFalse:'showError',afterTrue:'hideError'}});
+
+            // Custom function showError will be triggered when a field fails any validation
+            function showError(event) // This function will receive an event as argument
+            {
+                // Gets the input that fails
+                const element = event.target;
+                // Gets span where error will be shown
+                const span = element.parentElement.getElementsByTagName('span')[0];
+                // Sets 'error-input' class to the input
+                element.classList.add('error-input');
+                // Removes 'hidden' class for the error to be shown
+                span.classList.remove('hidden');
+                // Sets the error text for the validation that is failing
+                span.innerText = element.validate.validationText;
+            }
+            // Custom function hiddeError will be triggered when a field passes all validations
+            function hideError(event) // This function will receive an event as argument
+            {
+                // Gets the input that pass the validation
+                const element = event.target;
+                // Gets span where error are shown
+                const span = element.parentElement.getElementsByTagName('span')[0];
+                // Removes 'error-input' class from the input
+                element.classList.remove('error-input');
+                // Adds 'hidden' class to span for hidden error text
+                span.classList.add('hidden');
+            }
+        </script>
+    </body>
+</html>
