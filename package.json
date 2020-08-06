@@ -1,0 +1,31 @@
+{
+  "name": "nojs-validator",
+  "version": "1.0.0",
+  "description": "A validator that saves coding time using HTML attributes to set validation rules ",
+  "main": "nojs-validator.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheketo/nojs-validator.git"
+  },
+  "keywords": [
+    "forms",
+    "validator",
+    "form",
+    "validator",
+    "nojs-validator",
+    "validate",
+    "fields"
+  ],
+  "author": "Alejandro Romero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cheketo/nojs-validator/issues"
+  },
+  "homepage": "https://github.com/cheketo/nojs-validator#readme"
+}

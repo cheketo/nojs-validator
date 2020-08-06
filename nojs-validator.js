@@ -119,7 +119,7 @@ class NoJsValidateElement
 {
     validationText = '';
     validateOn = ['change'];
-    validations = ['empty','max-length','min-length','integer','float','numeric','max-value','min-value','email','checked','equal-to-field','function'];
+    validations = ['empty','max-length','min-length','integer','numeric','max-value','min-value','email','checked','equal-to-field','function'];
     beforeValidateEvent = new CustomEvent('beforeValidate');
     afterValidateEvent = new CustomEvent('afterValidate');
     afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
@@ -293,13 +293,6 @@ class NoJsValidateElement
             this.validationText = this.element.getAttribute('validate-numeric');
         return isValid;
     }
-    validateFloat()
-    {
-        var isValid = !Number.isNaN(parseFloat(this.element.value));
-        if(!isValid)
-            this.validationText = this.element.getAttribute('validate-numeric');
-        return isValid;
-    }
     validateEmail()
     {
         var isValid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( this.element.value );
@@ -319,16 +312,17 @@ class NoJsValidateElement
                 isValid = this.validateCheckedCheckbox();
             }
         }
-        if(!isValid)
-            this.validationText = this.element.getAttribute('validate-checked-msg');
     }
     validateCheckedRadio()
     {
         var name = this.element.getAttribute('name');
-        return document.getElementsByName(name).some(function(radio)
+        var isValid = document.getElementsByName(name).some(function(radio)
         {
             return radio.checked == true && radio.type.toLowerCase() == 'radio';
         });
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-checked');
+        return isValid;
     }
     validateCheckedCheckbox()
     {
@@ -338,6 +332,7 @@ class NoJsValidateElement
             return checkbox.checked == true && checkbox.type.toLowerCase() == 'checkbox';
         }).length;
         var target = parseInt(this.element.getAttribute('validate-checked'));
+        var isValid = false;
         if(isNaN(target))
         {
             var mode;
@@ -347,23 +342,30 @@ class NoJsValidateElement
             }
             switch(mode)
             {
-                case 'max': return checked <= target;
-                case 'equal': return checked == target;
-                default: return checked >= target;
+                case 'max': isValid = checked <= target; break;
+                case 'equal': isValid = checked == target; break;
+                default: isValid = checked >= target; break;
             }
         }else{
             console.log('Attribute validate-checked must be an integer number');
             return false;
         }
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-checked-msg');
+        return isValid;
     }
     validateEqualToField()
     {
         var field = document.getElementById(this.element.getAttribute('validate-equal-to-field'));
+        var isValid = false;
         if(field && field != undefined)
         {
-            return this.element.value == field.value;
+            isValid = this.element.value == field.value;
+        }else{
+            console.log('Attribute validate-equal-to-field must be an id of a field');
+            return isValid;
         }
-        console.log('Attribute validate-equal-to-field must be an id of a field');
-        return false;
+        if(!isValid)
+            this.validationText = this.element.getAttribute('validate-equal-to-field-msg');
     }
 }
