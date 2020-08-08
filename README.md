@@ -8,8 +8,6 @@ Run this command at your terminal to install this library
 $ npm i nojs-validator
 ```
  
----
- 
 ## Validations
 All validations are easy to use and all of them can be used just by including an attribute at the element that you want to validate. Right now, there are **11** validations:
 
@@ -29,7 +27,7 @@ All validations are easy to use and all of them can be used just by including an
 |**CHECKED** (Checkboxes - min mode)|Checks if the number of checked checkboxes are equal or higher than the value defined at **validate-checked** attribute. **min** mode will be set by default, if **valdiate-checked-mode** is not defined or is filled with other values.|`<input type="checkbox" name="foods" value="hamburguer" validate-checked="2" validate-checked-msg="Please, select 2 or more options"><input type="checkbox" name="foods" value="hotdog" validate-checked="2" validate-checked-msg="Please, select 2 or more options"><input type="checkbox" name="foods" value="fries" validate-checked="2" validate-checked-msg="Please, select 2 or more options">`|
 |**CHECKED** (Checkboxes - max mode)|Checks if the number of checked checkboxes are equal or lower than the value defined at **validate-checked** attribute.|`<input type="checkbox" name="handweapons" value="sword" validate-checked="2" validate-checked-mode="max" validate-checked-msg="Up to 2 options can be checked"><input type="checkbox" name="handweapons" value="shield" validate-checked="2" validate-checked-mode="max" validate-checked-msg="Up to 2 options can be checked"><input type="checkbox" name="handweapons" value="wand" validate-checked="2" validate-checked-mode="max" validate-checked-msg="Up to 2 options can be checked">`|
 |**CHECKED** (Checkboxes - equal mode)|Checks if the number of checked checkboxes are equal to value defined at **validate-checked** attribute.|`<input type="checkbox" name="accessories" value="glasses" validate-checked="2" validate-checked-mode="equal" validate-checked-msg="You must check 2 options"><input type="checkbox" name="accessories" value="headphones" validate-checked="2" validate-checked-mode="equal" validate-checked-msg="You must check 2 options"><input type="checkbox" name="accessories" value="cap" validate-checked="2" validate-checked-mode="equal" validate-checked-msg="You must check 2 options">`|
-|**EQUAL TO FIELD**|This validation checks if the field value is equal to another field value. To use it, attribute *validate-equal-to-field* must be defined and filled with a field ID. Error text can be defined in *validate-equal-to-field-msg* attribute.|`<input type="text" name="user" validate-equal-to-field="author" validate-equal-to-field-msg="User must match author"><input type="text" name="author" id="author">`|
+|**EQUAL TO FIELD**|This validation checks if the field value is equal to another field value. To use it, attribute **validate-equal-to-field** must be defined and filled with a field ID. Error text can be defined in **validate-equal-to-field-msg** attribute.|`<input type="text" name="user" validate-equal-to-field="author" validate-equal-to-field-msg="User must match author"><input type="text" name="author" id="author">`|
 
  
 ## Custom Validations
@@ -50,10 +48,9 @@ Then, functions has to be added at the **validate-function** attribute. A custom
 ```
 <input type="text" validate-function="testValidation,anotherValidation" validate-function-testValidation-msg="This is an error text for display when testValidation function returns false">
 ```
+## Events
  
----
- 
-## Usage
+## Initialization
 Include **nojs-validator.js** file and create a new NoJsValidator object like this:
 ```
 <script type="text/javascript" src="nojs-validator.js"></script>
@@ -61,3 +58,23 @@ Include **nojs-validator.js** file and create a new NoJsValidator object like th
     var validator = new NoJsValidator();
 </script>
 ```
+## Custom Settings
+You can define custom settings to initialize NoJsValidator object:
+| Name | Type | Description | Example |
+|----|----|----|----|
+|**forms**|Array|Sets the forms that will be evaluated. If it's not defined all elements from all forms will be evaluated|`forms:['myForm','otherForm']`|
+|**mainClass**|String|Define a class that an element needs to have in order to be evaluated|`mainClass:'customClass'`|
+|**events**|JSON|Attachs functions to be triggered when certain events are triggered|`events:{before:'customFunction',after:'otherFunction',afterFalse:'showError',afterTrue:'cleanError'}`|
+|**elements**|Array|Defines which elements should be evaluated. Default value: ['input','select','textarea'] |`elements:['input','select']`|
+|**validateOn**|String|Defines when elements should be validated. Default value: 'change'|`validateOn:'keydown,mouseover'`|
+
+
+
+
+
+
+
+
+
+
+

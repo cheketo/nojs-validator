@@ -107,10 +107,10 @@ class NoJsValidator
     }
     isValid()
     {
-        var isValid = this.elements.every(function(element)
+        var isValid = this.elements.filter(function(element)
         {
             return element.validate.isValid();
-        });
+        }).length == this.elements.length;
         return isValid;
     }
 }
