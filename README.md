@@ -147,9 +147,13 @@ const validator = new NoJsValidator(
     }
 });
 ```
+
 <br>
+
 Finally, *customForm* will be submited when passes all fields validations else will show errors using custom functions.
+
 <br>
+
 Method **isValid()** can be used whenever you want.
 Example:
 ```
