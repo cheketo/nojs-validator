@@ -40,6 +40,7 @@ All validations are easy to use and all of them can be used just by including an
  
 ## Custom Validations
 It's obvious that this validations are not enough to validate all cases. So, custom validations can be added. This is very simple to do, just add your validation functions to **validate-function** attribute. Example:
+<br>
 First, define a function to validate:
 ```
 function testValidation(element)
@@ -95,11 +96,12 @@ You can define custom settings to initialize NoJsValidator object:
 
 ## Visualization
 Validations rules can be all the same for most of the web forms. But the way to show errors or asserts is unique at every site. So, this is the only part that NoJsValidator gives all what is needed to make it more simplier.
-Some examples can be found at *examples* folder, but here is one to resume all. Lets create a custom NoJoValidate object to show errors:
+Some examples can be found at *examples* folder, but here is one to resume all.
+Lets create a custom NoJoValidate object to show errors:
 
 First, validation rules must be defined at HTML form as attributes. 
 ```
-<form>
+<form id="customForm">
     <input type="text" validate-empty="Please, insert an user" validate-min-length="4' validate-min-length-msg="At least, 4 characters must be entered" id="user">
     <span id="user-error"></span>
     <input type="password" validate-empty="Insert a password" id="password">
@@ -121,7 +123,7 @@ Then, lets create custom functions to show or hide errors.
         span.style.display = 'block';
     }
 
-    function hideError()
+    function hideError(event)
     {
         // This function will remove error class to a validated field
         // And hide error text from span
@@ -144,7 +146,25 @@ const validator = new NoJsValidator(
         afterTrue: 'hideError',
     }
 });
-``` 
+```
+<br>
+Finally, *customForm* will be submited when passes all fields validations else will show errors using custom functions.
+<br>
+Method **isValid()** can be used whenever you want.
+Example:
+```
+function thatDoSomethingElse()
+{
+    // Do staff
+    if(validator.isValid())
+    {
+        // Do staff
+    }else{
+        // Do staff
+    }
+    // Do staff
+}
+```
 
 
 
