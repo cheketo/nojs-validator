@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = class NoJsValidator
+class NoJsValidator
 {
     mainClass = '';
     elementTags = ['input','select','textarea'];
@@ -371,3 +371,8 @@ class NoJsValidateElement
             this.validationText = this.element.getAttribute('validate-equal-to-field-msg');
     }
 }
+
+module.exports = {
+    NoJsValidator,
+    NoJsValidateElement,
+};
