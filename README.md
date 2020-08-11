@@ -159,14 +159,14 @@ Example:
 ```
 function thatDoSomethingElse()
 {
-    // Do staff
+    // Do stuff
     if(validator.isValid())
     {
-        // Do staff
+        // Do stuff
     }else{
-        // Do staff
+        // Do stuff
     }
-    // Do staff
+    // Do stuff
 }
 ```
 
