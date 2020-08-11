@@ -1,4 +1,6 @@
-class NoJsValidator
+'use strict';
+
+module.exports = class NoJsValidator
 {
     mainClass = '';
     elementTags = ['input','select','textarea'];
