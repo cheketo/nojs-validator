@@ -1,6 +1,6 @@
 {
   "name": "nojs-validator",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A validator that saves coding time using HTML attributes to set validation rules ",
   "main": "nojs-validator.js",
   "directories": {
