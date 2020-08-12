@@ -118,22 +118,28 @@ let NoJsValidator = class
 
 class NoJsValidateElement
 {
-    validationText = '';
-    validateOn = ['change'];
-    validations = ['empty','max-length','min-length','integer','numeric','max-value','min-value','email','checked','equal-to-field','function'];
-    beforeValidateEvent = new CustomEvent('beforeValidate');
-    afterValidateEvent = new CustomEvent('afterValidate');
-    afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
-    afterValidateFalseEvent = new CustomEvent('afterValidateFalse');
+    // validationText = '';
+    // validateOn = ['change'];
+    // validations = ['empty','max-length','min-length','integer','numeric','max-value','min-value','email','checked','equal-to-field','function'];
+    // beforeValidateEvent = new CustomEvent('beforeValidate');
+    // afterValidateEvent = new CustomEvent('afterValidate');
+    // afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
+    // afterValidateFalseEvent = new CustomEvent('afterValidateFalse');
 
     constructor(element)
     {
+        this.validations = ['empty','max-length','min-length','integer','numeric','max-value','min-value','email','checked','equal-to-field','function'];
+        this.beforeValidateEvent = new CustomEvent('beforeValidate');
+        this.afterValidateEvent = new CustomEvent('afterValidate');
+        this.afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
+        this.afterValidateFalseEvent = new CustomEvent('afterValidateFalse');
         this.element = element;
         this.setValidateOn();
         this.setValidateEvents();
     }
     setValidateOn()
     {
+        this.validateOn = ['change'];
         if(this.element.hasAttribute('validate-on'))
         {
             this.validateOn = this.element.getAttribute('validate-on').split(',');
