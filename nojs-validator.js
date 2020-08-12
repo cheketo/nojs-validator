@@ -1,4 +1,9 @@
-let NoJsValidator = class 
+"use strict";
+
+var NoJsValidatorModule = function() {};
+export default NoJsValidatorModule;
+
+class NoJsValidator
 {
     // mainClass = '';
     // elementTags = ['input','select','textarea'];
@@ -376,3 +381,5 @@ class NoJsValidateElement
             this.validationText = this.element.getAttribute('validate-equal-to-field-msg');
     }
 }
+
+_NoJsValidator
