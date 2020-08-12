@@ -1,13 +1,14 @@
-exports.NoJsValidator = class NoJsValidator
+let NoJsValidator = class 
 {
-    mainClass = '';
-    elementTags = ['input','select','textarea'];
-    elements = [];
-    forms = [];
-    events = {};
-    validateOn = '';
+    // mainClass = '';
+    // elementTags = ['input','select','textarea'];
+    // elements = [];
+    // forms = [];
+    // events = {};
+    // validateOn = '';
     constructor( obj = {} )
     {
+        this.elements = [];
         this.setMainClass(obj.mainClass);
         this.setElementTags(obj.elements);
         this.setForms(obj.forms);
@@ -17,10 +18,10 @@ exports.NoJsValidator = class NoJsValidator
     }
     setMainClass(mainClass=null)
     {
-        if(mainClass)
-        {
+        // if(mainClass)
+        // {
             this.mainClass = mainClass;
-        }
+        // }
     }
     setForms(forms=[])
     {
@@ -33,21 +34,21 @@ exports.NoJsValidator = class NoJsValidator
             }
         }.bind(this));
     }
-    setElementTags(tags=[])
+    setElementTags(tags=['input','select','textarea'])
     {
-        if(tags.length)
-        {
+        // if(tags.length)
+        // {
             this.elementTags = tags;
-        }
+        // }
     }
-    setValidationEvents(events)
+    setValidationEvents(events={})
     {
-        if(events)
+        // if(events)
             this.events = events;
     }
-    setValidateOn(validateOn)
+    setValidateOn(validateOn='')
     {
-        if(validateOn)
+        // if(validateOn)
             this.validateOn = validateOn;
     }
     setElements()
