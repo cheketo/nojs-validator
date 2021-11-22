@@ -8,7 +8,12 @@ This is a vanilla JS library that helps to automatize and reuse form validations
 <br>
  
 ## Installation
-Run this command at your terminal to install this library
+You can install adding this script to your html:
+```
+<script src="https://unpkg.com/nojs-validator/nojs-validator.js"></script>
+```
+
+Or using npm
 ```
 $ npm i nojs-validator
 ```
@@ -93,6 +98,8 @@ You can define custom settings to initialize NoJsValidator object:
 |**events**|JSON|Attachs functions to be triggered when certain events are triggered|`events:{before:'customFunction',after:'otherFunction',afterFalse:'showError',afterTrue:'cleanError'}`|
 |**elements**|Array|Defines which elements should be evaluated. Default value: ['input','select','textarea'] |`elements:['input','select']`|
 |**validateOn**|String|Defines when elements should be validated. Default value: 'change'|`validateOn:'keydown,mouseover'`|
+
+<br>
 
 ## Visualization
 Validations rules can be all the same for most of the web forms. But the way to show errors or asserts is unique at every site. So, this is the only part that NoJsValidator gives all what is needed to make it more simplier.

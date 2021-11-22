@@ -1,135 +1,13 @@
-"use strict";
-
-var NoJsValidatorModule = function() {};
-export default NoJsValidatorModule;
-
-class NoJsValidator
-{
-    // mainClass = '';
-    // elementTags = ['input','select','textarea'];
-    // elements = [];
-    // forms = [];
-    // events = {};
-    // validateOn = '';
-    constructor( obj = {} )
-    {
-        this.elements = [];
-        this.setMainClass(obj.mainClass);
-        this.setElementTags(obj.elements);
-        this.setForms(obj.forms);
-        this.setValidationEvents(obj.events);
-        this.setValidateOn(obj.validateOn);
-        this.setElements();
-    }
-    setMainClass(mainClass=null)
-    {
-        // if(mainClass)
-        // {
-            this.mainClass = mainClass;
-        // }
-    }
-    setForms(forms=[])
-    {
-        forms.forEach(function(form)
-        {
-            var newForm = document.forms.namedItem(form);
-            if(newForm)
-            {
-                this.forms = this.forms.concat(newForm);
-            }
-        }.bind(this));
-    }
-    setElementTags(tags=['input','select','textarea'])
-    {
-        // if(tags.length)
-        // {
-            this.elementTags = tags;
-        // }
-    }
-    setValidationEvents(events={})
-    {
-        // if(events)
-            this.events = events;
-    }
-    setValidateOn(validateOn='')
-    {
-        // if(validateOn)
-            this.validateOn = validateOn;
-    }
-    setElements()
-    {
-        if(this.forms.length)
-        {
-            this.setElementsByForms();
-        }else{
-            this.setElementsByTags();
-        }
-    }
-
-    setElementsByForms()
-    {
-        this.forms.forEach(function(form)
-        {
-            for (let index = 0; index < form.length; index++)
-            {
-                if(this.elementTags.indexOf(String(form[index].tagName).toLowerCase()) != -1)
-                {
-                    this.pushElement(form[index]);
-                }
-            }
-        }.bind(this));
-    }
-    setElementsByTags()
-    {
-        this.elementTags.forEach(function(tag)
-        {
-            var elements = document.getElementsByTagName(tag);
-            for (let index = 0; index < elements.length; index++)
-            {
-                this.pushElement(elements[index]);
-            }
-        }.bind(this));
-    }
-    pushElement(element)
-    {
-        if(!this.mainClass || element.classList.contains(this.mainClass))
-        {
-            if(this.events.before && !element.hasAttribute('validate-before')) element.setAttribute('validate-before',this.events.before);
-            if(this.events.after && !element.hasAttribute('validate-after')) element.setAttribute('validate-after',this.events.after);
-            if(this.events.afterTrue && !element.hasAttribute('validate-after-true')) element.setAttribute('validate-after-true',this.events.afterTrue);
-            if(this.events.afterFalse && !element.hasAttribute('validate-after-false')) element.setAttribute('validate-after-false',this.events.afterFalse);
-            if(this.validateOn && !element.hasAttribute('validate-on')) element.setAttribute('validate-on',this.validateOn);
-            element.validate = new NoJsValidateElement(element);
-            this.elements = this.getElements().concat(element);
-        }
-    }
-    getElements()
-    {
-        return this.elements;
-    }
-    showElements()
-    {
-        console.log(this.getElements());
-    }
-    isValid()
-    {
-        var isValid = this.elements.filter(function(element)
-        {
-            return element.validate.isValid();
-        }).length == this.elements.length;
-        return isValid;
-    }
-}
 
 class NoJsValidateElement
 {
-    // validationText = '';
-    // validateOn = ['change'];
-    // validations = ['empty','max-length','min-length','integer','numeric','max-value','min-value','email','checked','equal-to-field','function'];
-    // beforeValidateEvent = new CustomEvent('beforeValidate');
-    // afterValidateEvent = new CustomEvent('afterValidate');
-    // afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
-    // afterValidateFalseEvent = new CustomEvent('afterValidateFalse');
+    validationText = '';
+    validateOn = ['change'];
+    validations = ['empty','max-length','min-length','integer','numeric','max-value','min-value','email','checked','equal-to-field','function'];
+    beforeValidateEvent = new CustomEvent('beforeValidate');
+    afterValidateEvent = new CustomEvent('afterValidate');
+    afterValidateTrueEvent = new CustomEvent('afterValidateTrue');
+    afterValidateFalseEvent = new CustomEvent('afterValidateFalse');
 
     constructor(element)
     {
@@ -382,4 +260,122 @@ class NoJsValidateElement
     }
 }
 
-_NoJsValidator
+class NoJsValidator
+{
+    mainClass = '';
+    elementTags = ['input','select','textarea'];
+    elements = [];
+    forms = [];
+    events = {};
+    validateOn = '';
+    constructor( obj = {} )
+    {
+        this.elements = [];
+        this.setMainClass(obj.mainClass);
+        this.setElementTags(obj.elements);
+        this.setForms(obj.forms);
+        this.setValidationEvents(obj.events);
+        this.setValidateOn(obj.validateOn);
+        this.setElements();
+    }
+    setMainClass(mainClass=null)
+    {
+        // if(mainClass)
+        // {
+            this.mainClass = mainClass;
+        // }
+    }
+    setForms(forms=[])
+    {
+        forms.forEach(function(form)
+        {
+            var newForm = document.forms.namedItem(form);
+            if(newForm)
+            {
+                this.forms = this.forms.concat(newForm);
+            }
+        }.bind(this));
+    }
+    setElementTags(tags=['input','select','textarea'])
+    {
+        // if(tags.length)
+        // {
+            this.elementTags = tags;
+        // }
+    }
+    setValidationEvents(events={})
+    {
+        // if(events)
+            this.events = events;
+    }
+    setValidateOn(validateOn='')
+    {
+        // if(validateOn)
+            this.validateOn = validateOn;
+    }
+    setElements()
+    {
+        if(this.forms.length)
+        {
+            this.setElementsByForms();
+        }else{
+            this.setElementsByTags();
+        }
+    }
+
+    setElementsByForms()
+    {
+        this.forms.forEach(function(form)
+        {
+            for (let index = 0; index < form.length; index++)
+            {
+                if(this.elementTags.indexOf(String(form[index].tagName).toLowerCase()) != -1)
+                {
+                    this.pushElement(form[index]);
+                }
+            }
+        }.bind(this));
+    }
+    setElementsByTags()
+    {
+        this.elementTags.forEach(function(tag)
+        {
+            var elements = document.getElementsByTagName(tag);
+            for (let index = 0; index < elements.length; index++)
+            {
+                this.pushElement(elements[index]);
+            }
+        }.bind(this));
+    }
+    pushElement(element)
+    {
+        if(!this.mainClass || element.classList.contains(this.mainClass))
+        {
+            if(this.events.before && !element.hasAttribute('validate-before')) element.setAttribute('validate-before',this.events.before);
+            if(this.events.after && !element.hasAttribute('validate-after')) element.setAttribute('validate-after',this.events.after);
+            if(this.events.afterTrue && !element.hasAttribute('validate-after-true')) element.setAttribute('validate-after-true',this.events.afterTrue);
+            if(this.events.afterFalse && !element.hasAttribute('validate-after-false')) element.setAttribute('validate-after-false',this.events.afterFalse);
+            if(this.validateOn && !element.hasAttribute('validate-on')) element.setAttribute('validate-on',this.validateOn);
+            element.validate = new NoJsValidateElement(element);
+            this.elements = this.getElements().concat(element);
+        }
+    }
+    getElements()
+    {
+        return this.elements;
+    }
+    showElements()
+    {
+        console.log(this.getElements());
+    }
+    isValid()
+    {
+        var isValid = this.elements.filter(function(element)
+        {
+            return element.validate.isValid();
+        }).length == this.elements.length;
+        return isValid;
+    }
+}
+
+module.exports = {NoJsValidateElement, NoJsValidator};

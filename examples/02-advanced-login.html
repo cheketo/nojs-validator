@@ -31,7 +31,7 @@
                 <button type="submit" onclick="return validator.isValid()">Submit</button>
             </div>
         </form>
-        <script src="../nojs-validator.js"></script>
+        <script src="https://unpkg.com/nojs-validator/nojs-validator.js"></script>
         <script>
             // Creates NoJsValidator with events to have a custom visual response of validations
             const validator = new NoJsValidator({events:{afterFalse:'showError',afterTrue:'hideError'}});
