@@ -102,7 +102,7 @@ You can define custom settings to initialize NoJsValidator object:
 |:----:|----|----|----|
 |**forms**|Array|Sets the forms that will be evaluated. If it's not defined all elements from all forms will be evaluated|`forms:['myForm','otherForm']`|
 |**mainClass**|String|Define a class that an element needs to have in order to be evaluated|`mainClass:'customClass'`|
-|**events**|JSON|Attachs functions to be triggered when certain events are triggered|`events:{before:'customFunction',after:'otherFunction',afterFalse:'showError',afterTrue:'cleanError'}`|
+|**events**|JSON|Attachs functions to be triggered when certain events are triggered|`events: { before:'customFunction', after:'otherFunction', afterFalse:'showError', afterTrue:'cleanError' }`|
 |**elements**|Array|Defines which elements should be evaluated. Default value: ['input','select','textarea'] |`elements:['input','select']`|
 |**validateOn**|String|Defines when elements should be validated. Default value: 'change'|`validateOn:'keydown,mouseover'`|
 
