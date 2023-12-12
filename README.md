@@ -1,7 +1,14 @@
-# nojs-validator
+<h1 align="center" style="text-align:center;">
+nojs-validator
+</h1>
 
-<br>
+<div align="center" style="text-align:center;">
+ 
+![NPM Downloads](https://img.shields.io/npm/dw/nojs-validator)
 
+</div>
+
+---
 ## Description
 This is a vanilla JS library that helps to automatize and reuse form validations using HTML input attributes to set rules. It's very easy to use and it will let you save validations coding time. **Do it once, use it forever!**
 
