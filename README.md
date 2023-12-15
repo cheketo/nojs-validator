@@ -19,6 +19,8 @@ You can install adding this script to your html:
 ```html
 <script src="https://unpkg.com/nojs-validator/nojs-validator.js"></script>
 ```
+> [!IMPORTANT]
+> If you choose to add a script tag remember to add it at the bottom of HTML body tag.
 
 Or using npm
 ```bash
@@ -116,7 +118,7 @@ Lets create a custom NoJoValidate object to show errors:
 First, validation rules must be defined at HTML form as attributes. 
 ```html
 <form id="customForm">
-    <input type="text" validate-empty="Please, insert an user" validate-min-length="4' validate-min-length-msg="At least, 4 characters must be entered" id="user">
+    <input type="text" validate-empty="Please, insert an user" validate-min-length="4" validate-min-length-msg="At least, 4 characters must be entered" id="user">
     <span id="user-error"></span>
     <input type="password" validate-empty="Insert a password" id="password">
     <span id="password-error"></span>
